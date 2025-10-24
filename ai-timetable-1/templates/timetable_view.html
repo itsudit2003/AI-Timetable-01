@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Timetable View{% endblock %}
+{% block content %}
+<h2>Timetable</h2>
+<form method="GET" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <select class="form-select" name="course_id" required>
+            <option value="">Select Course</option>
+            {% for c in courses %}
+            <option value="{{ c.id }}" {% if selected_course == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select class="form-select" name="section_id" required>
+            <option value="">Select Section</option>
+            {% for s in sections %}
+            <option value="{{ s.id }}" {% if selected_section == s.id %}selected{% endif %}>{{ s.name }} ({{ s.course_name }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4"><button class="btn btn-primary w-100">View</button></div>
+</form>
+
+{% if timetable %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Day</th>
+            {% for period in periods %}
+            <th>{{ period.start_time }} - {{ period.end_time }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for day, day_entries in timetable.items() %}
+        <tr>
+            <td>{{ day }}</td>
+            {% for p in periods %}
+                {% set entry = day_entries.get(p.id) %}
+                <td>{{ entry.subject_name if entry else '' }}<br>{{ entry.teacher_name if entry else '' }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

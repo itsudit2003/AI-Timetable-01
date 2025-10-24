@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Generate Timetable{% endblock %}
+{% block content %}
+<h2>Generate Timetable</h2>
+
+<form method="POST" class="row g-2">
+    <div class="col-md-6">
+        <select class="form-select" name="course_id" required>
+            <option value="">Select Course</option>
+            {% for c in courses %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-success w-100">Generate</button>
+    </div>
+</form>
+
+{% if timetable %}
+<h3 class="mt-4">Generated Timetable</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th>Section</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in timetable %}
+        <tr>
+            <td>{{ entry.day_of_week }}</td>
+            <td>{{ entry.section_name }}</td>
+            <td>{{ entry.subject_name }}</td>
+            <td>{{ entry.teacher_name }}</td>
+            <td>{{ entry.start_time }}</td>
+            <td>{{ entry.end_time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

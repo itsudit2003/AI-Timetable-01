@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Assign Subjects{% endblock %}
+{% block content %}
+<h2>Assign Subjects to Teachers</h2>
+<form method="POST" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <select class="form-select" name="teacher_id" required>
+            <option value="">Select Teacher</option>
+            {% for t in teachers %}
+            <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="subject_id" required>
+            <option value="">Select Subject</option>
+            {% for s in subjects %}
+            <option value="{{ s.id }}">{{ s.name }} ({{ s.course_name }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="section_id" required>
+            <option value="">Select Section</option>
+            {% for sec in sections %}
+            <option value="{{ sec.id }}">{{ sec.name }} ({{ sec.course_name }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3"><button class="btn btn-primary w-100">Assign</button></div>
+</form>
+
+<table class="table table-bordered">
+    <thead><tr><th>Teacher</th><th>Subject</th><th>Section</th></tr></thead>
+    <tbody>
+        {% for a in assignments %}
+        <tr>
+            <td>{{ a.teacher_name }}</td>
+            <td>{{ a.subject_name }}</td>
+            <td>{{ a.section_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

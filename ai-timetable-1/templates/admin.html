@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="row my-3">
+    <div class="col-md-3"><a href="{{ url_for('admin.courses') }}" class="btn btn-primary w-100">Manage Courses</a></div>
+    <div class="col-md-3"><a href="{{ url_for('admin.sections') }}" class="btn btn-primary w-100">Manage Sections</a></div>
+    <div class="col-md-3"><a href="{{ url_for('admin.subjects') }}" class="btn btn-primary w-100">Manage Subjects</a></div>
+    <div class="col-md-3"><a href="{{ url_for('admin.assign') }}" class="btn btn-warning w-100">Assign Subjects</a></div>
+</div>
+<div class="row my-3">
+    <div class="col-md-6"><a href="{{ url_for('admin.generate') }}" class="btn btn-success w-100">Generate Timetable</a></div>
+    <div class="col-md-6"><a href="{{ url_for('admin.admin') }}" class="btn btn-info w-100">View Timetables</a></div>
+</div>
+{% endblock %}

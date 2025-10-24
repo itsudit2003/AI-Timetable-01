@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block content %}
+<h2>My Timetable</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Section</th>
+            {% for day in days %}
+            <th>{{ day }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for section, day_entries in timetable.items() %}
+        <tr>
+            <td>{{ section }}</td>
+            {% for day in days %}
+                <td>
+                    {% if day_entries[day] %}
+                        {% for entry in day_entries[day] %}
+                            <strong>{{ entry.subject_name }}</strong><br>
+                            {{ entry.start_time }} - {{ entry.end_time }}<br>
+                        {% endfor %}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
