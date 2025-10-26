@@ -53,20 +53,39 @@ def login():
 @auth_bp.route('/signup', methods=['GET','POST'])
 def signup():
     if request.method=='POST':
-        name=request.form.get('name')
-        email=request.form.get('email')
-        password=request.form.get('password')
-        confirm=request.form.get('confirm_password')
-        max_hours=int(request.form.get('max_hours') or 20)
-        if password!=confirm: flash("Passwords do not match"); return render_template('signup.html')
-        hashed=generate_password_hash(password)
-        conn=get_db(); cur=conn.cursor()
-        cur.execute('SELECT id FROM teachers WHERE email=%s',(email,))
-        if cur.fetchone(): flash("User exists"); return render_template('signup.html')
-        cur.execute('INSERT INTO teachers (name,email,password,max_hours_per_week) VALUES (%s,%s,%s,%s)',(name,email,hashed,max_hours))
-        conn.commit(); cur.close(); conn.close()
-        flash("Signup successful!"); return redirect(url_for('auth.login'))
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm = request.form.get('confirm_password')
+        role = request.form.get('role')
+        max_hours = int(request.form.get('max_hours') or 20)
+
+        if password != confirm:
+            flash("Passwords do not match", "danger")
+            return render_template('signup.html')
+
+        hashed = generate_password_hash(password)
+        conn = get_db()
+        cur = conn.cursor()
+
+        cur.execute('SELECT id FROM teachers WHERE email=%s', (email,))
+        if cur.fetchone():
+            flash("User already exists", "danger")
+            cur.close(); conn.close()
+            return render_template('signup.html')
+
+        cur.execute('''
+            INSERT INTO teachers (name, email, password, max_hours_per_week)
+            VALUES (%s, %s, %s, %s)
+        ''', (name, email, hashed, max_hours))
+        conn.commit()
+        cur.close(); conn.close()
+
+        flash("Signup successful!", "success")
+        return redirect(url_for('auth.login'))
+
     return render_template('signup.html')
+
 
 @auth_bp.route('/logout')
 def logout(): session.clear(); return redirect(url_for('auth.login'))

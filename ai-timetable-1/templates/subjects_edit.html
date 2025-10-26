@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Edit Subject{% endblock %}
+{% block content %}
+<h2>Edit Subject</h2>
+<form method="POST" class="row g-2">
+    <div class="col-md-3">
+        <input type="text" name="name" class="form-control" value="{{ subject.name }}" required>
+    </div>
+    <div class="col-md-3">
+        <select name="course_id" class="form-select" required>
+            {% for c in courses %}
+            <option value="{{ c.id }}" {% if c.id == subject.course_id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <input type="number" name="duration" class="form-control" value="{{ subject.default_duration_minutes }}">
+    </div>
+    <div class="col-md-2">
+        <select name="is_lab" class="form-select">
+            <option value="0" {% if not subject.is_lab %}selected{% endif %}>Theory</option>
+            <option value="1" {% if subject.is_lab %}selected{% endif %}>Lab</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100">Update</button>
+    </div>
+</form>
+<a href="{{ url_for('admin.subjects') }}" class="btn btn-secondary mt-2">Cancel</a>
+{% endblock %}

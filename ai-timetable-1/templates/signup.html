@@ -16,11 +16,19 @@
         <input type="password" class="form-control" name="password" required>
     </div>
     <div class="mb-3">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" name="confirm_password" required>
+    </div>
+    <div class="mb-3">
         <label>Role</label>
         <select class="form-select" name="role" required>
             <option value="teacher">Teacher</option>
             <option value="hod">HOD/Admin</option>
         </select>
+    </div>
+    <div class="mb-3">
+        <label>Max Hours per Week (for teachers)</label>
+        <input type="number" class="form-control" name="max_hours" min="1" max="80" placeholder="e.g. 20" required>
     </div>
     <button class="btn btn-success">Signup</button>
 </form>

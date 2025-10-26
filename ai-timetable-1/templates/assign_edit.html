@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Edit Assignment{% endblock %}
+{% block content %}
+<h2>Edit Assignment</h2>
+<form method="POST" action="{{ url_for('admin.update_assignment', teacher_id=teacher_id, subject_id=subject_id) }}">
+    <div class="mb-3">
+        <label>Teacher</label>
+        <select class="form-select" disabled>
+            {% for t in teachers %}
+            <option value="{{ t.id }}" {% if t.id == teacher_id %}selected{% endif %}>{{ t.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Subject</label>
+        <select class="form-select" disabled>
+            {% for s in subjects %}
+            <option value="{{ s.id }}" {% if s.id == subject_id %}selected{% endif %}>{{ s.name }} ({{ s.course_name }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Sections</label>
+        <select class="form-select" name="section_ids" multiple required>
+            {% for sec in sections %}
+            <option value="{{ sec.id }}" {% if sec.id in current_sections %}selected{% endif %}>
+                {{ sec.name }} ({{ sec.course_name }})
+            </option>
+            {% endfor %}
+        </select>
+        <small class="form-text text-muted">Hold Ctrl (Cmd) to select multiple sections.</small>
+    </div>
+    <button class="btn btn-primary w-100">Update Assignment</button>
+</form>
+
+{% endblock %}

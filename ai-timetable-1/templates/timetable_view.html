@@ -1,45 +1,49 @@
 {% extends "base.html" %}
-{% block title %}Timetable View{% endblock %}
+{% block title %}View Timetable{% endblock %}
+
 {% block content %}
-<h2>Timetable</h2>
-<form method="GET" class="row g-2 mb-3">
+<h2>View Timetable</h2>
+
+<form method="POST" class="row g-2 mb-3">
     <div class="col-md-4">
         <select class="form-select" name="course_id" required>
             <option value="">Select Course</option>
             {% for c in courses %}
-            <option value="{{ c.id }}" {% if selected_course == c.id %}selected{% endif %}>{{ c.name }}</option>
+            <option value="{{ c.id }}" {% if selected_course_id==c.id %}selected{% endif %}>{{ c.name }}</option>
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-4">
-        <select class="form-select" name="section_id" required>
-            <option value="">Select Section</option>
-            {% for s in sections %}
-            <option value="{{ s.id }}" {% if selected_section == s.id %}selected{% endif %}>{{ s.name }} ({{ s.course_name }})</option>
-            {% endfor %}
-        </select>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-info w-100">View Timetable</button>
     </div>
-    <div class="col-md-4"><button class="btn btn-primary w-100">View</button></div>
+    {% if selected_course_id %}
+    <div class="col-md-2">
+        <a href="{{ url_for('export.export_course', course_id=selected_course_id, format='xlsx') }}" class="btn btn-success w-100">Download Excel</a>
+    </div>
+    {% endif %}
 </form>
-
 {% if timetable %}
-<table class="table table-bordered">
+<table class="table table-bordered mt-3">
     <thead>
         <tr>
             <th>Day</th>
-            {% for period in periods %}
-            <th>{{ period.start_time }} - {{ period.end_time }}</th>
-            {% endfor %}
+            <th>Section</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Start</th>
+            <th>End</th>
         </tr>
     </thead>
     <tbody>
-        {% for day, day_entries in timetable.items() %}
+        {% set day_names = ["Monday","Tuesday","Wednesday","Thursday","Friday"] %}
+        {% for t in timetable %}
         <tr>
-            <td>{{ day }}</td>
-            {% for p in periods %}
-                {% set entry = day_entries.get(p.id) %}
-                <td>{{ entry.subject_name if entry else '' }}<br>{{ entry.teacher_name if entry else '' }}</td>
-            {% endfor %}
+            <td>{{ day_names[t.day_of_week] if t.day_of_week is not none else t.day_of_week }}</td>
+            <td>{{ t.section_name }}</td>
+            <td>{{ t.subject_name }}</td>
+            <td>{{ t.teacher_name }}</td>
+            <td>{{ t.start_time }}</td>
+            <td>{{ t.end_time }}</td>
         </tr>
         {% endfor %}
     </tbody>

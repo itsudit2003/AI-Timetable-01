@@ -2,22 +2,86 @@
 {% block title %}Sections{% endblock %}
 {% block content %}
 <h2>Sections</h2>
+
+<!-- Add Section Form -->
 <form method="POST" action="{{ url_for('admin.add_section') }}" class="mb-3 row g-2">
-    <div class="col-md-4"><input class="form-control" name="name" placeholder="Section Name" required></div>
     <div class="col-md-4">
-        <select class="form-select" name="course_id">
+        <input class="form-control" name="name" placeholder="Section Name" required>
+    </div>
+    <div class="col-md-4">
+        <select class="form-select" name="course_id" required>
             {% for c in courses %}
             <option value="{{ c.id }}">{{ c.name }}</option>
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-4"><button class="btn btn-success">Add Section</button></div>
+    <div class="col-md-4">
+        <button class="btn btn-success">Add Section</button>
+    </div>
 </form>
-<table class="table table-bordered">
-    <thead><tr><th>ID</th><th>Name</th><th>Course</th></tr></thead>
+
+<!-- Sections Table -->
+<table class="table table-bordered align-middle">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course</th>
+            <th>Section</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
     <tbody>
         {% for s in sections %}
-        <tr><td>{{ s.id }}</td><td>{{ s.name }}</td><td>{{ s.course_name }}</td></tr>
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.course_name }}</td>
+            <td>{{ s.name }}</td>
+            <td>
+                <!-- Edit Button -->
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ s.id }}">
+                    Edit
+                </button>
+
+                <!-- Delete Button -->
+                <form method="POST" action="{{ url_for('admin.delete_section', section_id=s.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this section?')">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal{{ s.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ s.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST" action="{{ url_for('admin.edit_section', section_id=s.id) }}">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel{{ s.id }}">Edit Section</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Section Name</label>
+                                <input type="text" name="name" class="form-control" value="{{ s.name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Course</label>
+                                <select name="course_id" class="form-select" required>
+                                    {% for c in courses %}
+                                    <option value="{{ c.id }}" {% if c.id == s.course_id %}selected{% endif %}>{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         {% endfor %}
     </tbody>
 </table>

@@ -2,8 +2,10 @@
 {% block title %}Assign Subjects{% endblock %}
 {% block content %}
 <h2>Assign Subjects to Teachers</h2>
+
 <form method="POST" class="row g-2 mb-3">
-    <div class="col-md-3">
+    <div class="col-md-4">
+        <label>Teacher</label>
         <select class="form-select" name="teacher_id" required>
             <option value="">Select Teacher</option>
             {% for t in teachers %}
@@ -11,33 +13,51 @@
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-3">
-        <select class="form-select" name="subject_id" required>
-            <option value="">Select Subject</option>
+
+    <div class="col-md-4">
+        <label>Subjects</label>
+        <select class="form-select" name="subject_ids" multiple required size="5">
             {% for s in subjects %}
             <option value="{{ s.id }}">{{ s.name }} ({{ s.course_name }})</option>
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-3">
-        <select class="form-select" name="section_id" required>
-            <option value="">Select Section</option>
+
+    <div class="col-md-4">
+        <label>Sections</label>
+        <select class="form-select" name="section_ids" multiple required size="5">
             {% for sec in sections %}
             <option value="{{ sec.id }}">{{ sec.name }} ({{ sec.course_name }})</option>
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-3"><button class="btn btn-primary w-100">Assign</button></div>
+
+    <div class="col-12 mt-2">
+        <button class="btn btn-primary w-100">Assign</button>
+    </div>
 </form>
 
 <table class="table table-bordered">
-    <thead><tr><th>Teacher</th><th>Subject</th><th>Section</th></tr></thead>
+    <thead>
+        <tr>
+            <th>Teacher</th>
+            <th>Subject</th>
+            <th>Sections</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
     <tbody>
         {% for a in assignments %}
         <tr>
             <td>{{ a.teacher_name }}</td>
             <td>{{ a.subject_name }}</td>
-            <td>{{ a.section_name }}</td>
+            <td>{{ a.section_names or '-' }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_assignment', teacher_id=a.teacher_id, subject_id=a.subject_id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ url_for('admin.delete_assignment', teacher_id=a.teacher_id, subject_id=a.subject_id) }}" method="POST" class="d-inline">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

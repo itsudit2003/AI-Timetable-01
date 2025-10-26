@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Generate Timetable{% endblock %}
+
 {% block content %}
 <h2>Generate Timetable</h2>
-
-<form method="POST" class="row g-2">
-    <div class="col-md-6">
+<form method="POST" class="row g-2 mb-3">
+    <div class="col-md-4">
         <select class="form-select" name="course_id" required>
             <option value="">Select Course</option>
             {% for c in courses %}
@@ -12,14 +12,13 @@
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-6">
-        <button type="submit" class="btn btn-success w-100">Generate</button>
+    <div class="col-md-4">
+        <button class="btn btn-primary w-100">Generate Timetable</button>
     </div>
 </form>
 
 {% if timetable %}
-<h3 class="mt-4">Generated Timetable</h3>
-<table class="table table-striped">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Day</th>
@@ -31,14 +30,29 @@
         </tr>
     </thead>
     <tbody>
-        {% for entry in timetable %}
+        {% set day_names = ["Monday","Tuesday","Wednesday","Thursday","Friday"] %}
+        {% macro format_time(t) %}
+            {% set h, m = t.split(':') %}
+            {% set h = h|int %}
+            {% set m = m|int %}
+            {% if h == 0 %}
+                12:{{ "%02d"|format(m) }} AM
+            {% elif h < 12 %}
+                {{ h }}:{{ "%02d"|format(m) }} AM
+            {% elif h==12 %}
+                12:{{ "%02d"|format(m) }} PM
+            {% else %}
+                {{ h-12 }}:{{ "%02d"|format(m) }} PM
+            {% endif %}
+        {% endmacro %}
+        {% for t in timetable %}
         <tr>
-            <td>{{ entry.day_of_week }}</td>
-            <td>{{ entry.section_name }}</td>
-            <td>{{ entry.subject_name }}</td>
-            <td>{{ entry.teacher_name }}</td>
-            <td>{{ entry.start_time }}</td>
-            <td>{{ entry.end_time }}</td>
+            <td>{{ day_names[t.day_of_week] if t.day_of_week is not none else t.day_of_week }}</td>
+            <td>{{ t.section_name }}</td>
+            <td>{{ t.subject_name }}</td>
+            <td>{{ t.teacher_name }}</td>
+            <td>{{ format_time(t.start_time_str) }}</td>
+            <td>{{ format_time(t.end_time_str) }}</td>
         </tr>
         {% endfor %}
     </tbody>
