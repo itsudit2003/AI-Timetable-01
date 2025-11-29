@@ -31,10 +31,10 @@ This project solves that using AI:
 | Layer | Tech |
 |-------|------|
 | Backend | Python + Flask |
-| AI Model | Google Gemini API |
+| AI Model | Google GenAI API |
 | Database | MySQL |
-| UI (Optional) | React / Streamlit |
-| Deployment | Docker / Render / Railway *(optional)* |
+| UI | HTML+CSS+JS |
+
 
 ---
 
@@ -52,8 +52,6 @@ note: Please setup all credentials before running
 
 python app.py
 
-
-
 App will start on:
 
 http://localhost:5000
@@ -70,8 +68,6 @@ http://localhost:5000
 ┣ 📄 requirements.txt
 ┗ 📄 README.md
 
-yaml
-Copy code
 
 ---
 
@@ -80,7 +76,7 @@ Copy code
 - 🔹 Core scheduling logic: Done  
 - 🔹 Input system + database layer: Done  
 - 🔸 UI polishing: In progress  
-- 🔸 Export formats: Coming soon  
+- 🔸 Export formats: Done (Excel)
 - 🔹 Deployment: Planned  
 
 
