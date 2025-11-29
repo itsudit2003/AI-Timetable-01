@@ -18,11 +18,11 @@ This project solves that using AI:
 
 ## ✨ Features
 
-- 🧠 **Gemini AI-powered scheduling logic**
-- 🔄 Automatic clash detection (teachers & subjects)
-- 👨‍🏫 Teacher availability constraint handling
-- 🏫 Multi-section and multi-class support
-- 📤 Export support: PDF / Excel / JSON *(coming soon)*
+- 🧠 Gemini AI-powered scheduling logic  
+- 🔄 Automatic clash detection (teachers & subjects)  
+- 👨‍🏫 Teacher availability constraint handling  
+- 🏫 Multi-section and multi-class support  
+- 📤 Export support: PDF / Excel / JSON *(coming soon)*  
 
 ---
 
@@ -40,12 +40,83 @@ This project solves that using AI:
 
 ## ⚙️ Installation
 
-```bash
-git clone https://github.com/itsudit2003/AI-Timetable-01.git
-cd AI-TimeTable-01
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
 pip install -r requirements.txt
 
-```
-Note: Please setup database and Gemini credentials before running!
+vbnet
+Copy code
 
+Set your API key:
 
+export GEMINI_API_KEY="YOUR_API_KEY"
+
+yaml
+Copy code
+
+---
+
+## ▶️ Run the Project
+
+python app.py
+
+nginx
+Copy code
+
+App will start on:
+
+http://localhost:5000
+
+yaml
+Copy code
+
+---
+
+## 📁 Project Structure
+
+📦 timetable-ai
+┣ 📂 backend
+┣ 📂 frontend
+┣ 📂 models
+┣ 📄 app.py
+┣ 📄 requirements.txt
+┗ 📄 README.md
+
+yaml
+Copy code
+
+---
+
+## 🧪 Current Status
+
+- 🔹 Core scheduling logic: Done  
+- 🔹 Input system + database layer: Done  
+- 🔸 UI polishing: In progress  
+- 🔸 Export formats: Coming soon  
+- 🔹 Deployment: Planned  
+
+---
+
+## 🤝 Contributing
+
+Pull requests, issues, and improvements are welcome.  
+Before contributing, open an issue to discuss major changes.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+### 🏁 Credits
+
+👨‍💻 Built by:  
+- **Udit Sood**  
+- **Tanishq Gupta**  
+- **Yogita Goyal**  
+
+📘 MCA Final Year Project — 2025  
+
+---
