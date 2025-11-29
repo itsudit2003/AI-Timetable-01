@@ -1,6 +1,6 @@
 # 📅 AI Timetable Generator (Powered by Gemini AI)
 
-A smart AI-based timetable generation system that creates optimized class schedules by considering subject load, teacher availability, time constraints, and conflict prevention — all powered by **Google Gemini AI**.
+A smart AI-based timetable generation system that creates optimized class schedules by considering subject load, teacher availability, time constraints, and conflict prevention — all powered by **Google Gemini AI**. We developed this project mainly as a submission for our Final Year Project (MCA, 2025).
 
 ---
 
@@ -40,19 +40,11 @@ This project solves that using AI:
 
 ## ⚙️ Installation
 
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/itsudit2003/AI-Timetable-01.git
+cd AI-Timetable-01
 pip install -r requirements.txt
+note: Please setup all credentials before running
 
-vbnet
-Copy code
-
-Set your API key:
-
-export GEMINI_API_KEY="YOUR_API_KEY"
-
-yaml
-Copy code
 
 ---
 
@@ -60,15 +52,11 @@ Copy code
 
 python app.py
 
-nginx
-Copy code
+
 
 App will start on:
 
 http://localhost:5000
-
-yaml
-Copy code
 
 ---
 
@@ -95,12 +83,6 @@ Copy code
 - 🔸 Export formats: Coming soon  
 - 🔹 Deployment: Planned  
 
----
-
-## 🤝 Contributing
-
-Pull requests, issues, and improvements are welcome.  
-Before contributing, open an issue to discuss major changes.
 
 ---
 
